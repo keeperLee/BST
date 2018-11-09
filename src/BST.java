@@ -30,32 +30,24 @@ public class BST<E extends Comparable<E>> {
     }
 
     public void add(E e){
-        if(root == null){
-            root = new Node(e);
-            size++;
-        }else{
-                add(root,e);
-        }
+      root = add(root,e);
     }
 
     //向以node为根的二分搜索树中插入元素E，递归算法
-    private void add(Node node ,E e){
+    //返回插入新节点后二分搜索树的根
+    private Node add(Node node ,E e){
         //递归终止条件
-        if(e.equals(node.e))
-            return;
-        else if(e.compareTo(node.e)<0 && node.left == null){
-            node.left = new Node(e);
-            size++;
-            return;
-        }else if(e.compareTo(node.e)>0 && node.right == null){
-            node.right = new Node(e);
-            size++;
-            return;
-        }
+       if(node == null){
+           size++;
+           return new Node(e);
+       }
+
+       //递归调用
         if(e.compareTo(node.e)<0)
-            add(node.left,e);
-        else //e.compareTo(node.e)<0
-            add(node.left,e);
+          node.left =   add(node.left,e);
+        else if(e.compareTo(node.e)>0)
+           node.right = add(node.left,e);
+        return node;
     }
 
 }
